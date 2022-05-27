@@ -24,23 +24,27 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (BuildContext context) => const LoginView(),
-        '/agency_listveiw': (BuildContext context) => const AgencyListView(title: 'title'),
-        '/agency_details': (BuildContext context) => const AgencyDetails()
+        '/agency_listveiw': (BuildContext context) => const AgencyListView(),
+        '/agency_details': (BuildContext context) => const AgencyDetails(),
       },
       home: Scaffold(
         drawer: NavigationRail(
           destinations: const [
             NavigationRailDestination(
-                icon: Icon(Icons.abc), label: Text("prufa")),
+                icon: Icon(Icons.abc),
+                label: Text("prufa"),
+            ),
             NavigationRailDestination(
-                icon: Icon(Icons.abc), label: Text("prufa")),
+                icon: Icon(Icons.access_time_rounded),
+                label: Text("prufa1")
+              ,),
             NavigationRailDestination(
-                icon: Icon(Icons.abc), label: Text("prufa"))
+                icon: Icon(Icons.accessible_forward),
+                label: Text("prufa3"),
+            )
           ],
           selectedIndex: 2,
         ),
-        appBar: AppBar(),
-
       ),
     );
   }

@@ -3,10 +3,14 @@ import 'package:http/http.dart' as http;
 
 import '../Models/Agent.dart';
 
+
+String serverHost = "192.168.1.237";
+
+
 /// AGENT Create POST
 /// Creating an Agent requires an [Agent] object sent from BODY
 Future<Agent> createAgent(Agent newAgent) async {
-  Uri url = Uri.parse("https://localhost:7210/api/agent");
+  Uri url = Uri.parse("https://$serverHost:7210/api/agent");
   var response = await http.post(url, body: newAgent);
 
   // TODO: remove 200 or 201 statuscode check
@@ -20,7 +24,7 @@ Future<Agent> createAgent(Agent newAgent) async {
 
 /// AGENT READ GET
 Future<List<Agent>> getAgentList() async {
-  var response = await http.get(Uri.parse("https://localhost:7210/api/agent"));
+  var response = await http.get(Uri.parse("https://$serverHost:7210/api/agent"));
 
   if(response.statusCode == 200 || response.statusCode == 201){
     final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
@@ -38,7 +42,7 @@ Future<List<Agent>> getAgentList() async {
 
 /// AGENTS READ
 Future<Agent> getAgentById(int id) async {
-  var response = await http.get(Uri.parse("https://localhost:7210/api/agent/$id"));
+  var response = await http.get(Uri.parse("https://$serverHost:7210/api/agent/$id"));
 
   if(response.statusCode == 200 || response.statusCode == 201){
     return Agent.fromJson(jsonDecode(response.body));
@@ -55,7 +59,7 @@ Future<Agent> getAgentById(int id) async {
 // TODO: Agent and property needs to made editable in api later
 
 Future<http.BaseResponse> updateAgentById(int id, Agent updatedAgent) async {
-  var url = Uri.parse("https://localhost:7210/api/agent/$id");
+  var url = Uri.parse("https://$serverHost:7210/api/agent/$id");
   var onlineAgent = await http.put(url, body: updatedAgent);
   return onlineAgent;
 }
@@ -63,7 +67,7 @@ Future<http.BaseResponse> updateAgentById(int id, Agent updatedAgent) async {
 
 /// AGENT Delete
 Future<http.BaseResponse> deleteAgentById(int id) async {
-  var response = await http.delete(Uri.parse("https://localhost:7210/api/agent/$id"));
+  var response = await http.delete(Uri.parse("https://$serverHost:7210/api/agent/$id"));
 
   if(response.statusCode == 200 || response.statusCode == 201){
     return response;

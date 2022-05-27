@@ -1,34 +1,52 @@
+import 'package:agencyui/Actions/AgentActions.dart';
 import 'package:flutter/material.dart';
 
 import '../Models/Agent.dart';
 
 
-class AgentListView extends StatelessWidget {
-  const AgentListView({Key? key, required this.title, required this.agents}) : super(key: key);
-  final List<Agent> agents;
-  final String title;
+class AgentListView extends StatefulWidget {
+  const AgentListView({Key? key/*, required this.title*/}) : super(key: key);
+  /*final String title;*/
+
+  @override
+  State<AgentListView> createState() => _AgencyListViewState();
+}
+
+class _AgencyListViewState extends State<AgentListView> {
+  late Future<List<Agent>> futureAgents;
+
+  @override
+  void initState() {
+    super.initState();
+    futureAgents = getAgentList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: ListView.builder(
-        itemCount: agents.length,
-          padding: const EdgeInsets.all(16),
-          itemBuilder: (context, index){
-            var agent = agents[index];
+    return FutureBuilder<List<Agent>>(
+      future: futureAgents,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+              itemCount: snapshot.data.length,
+              padding: const EdgeInsets.all(16),
+              itemBuilder: (context, index) {
+                Agent agent = snapshot.data[index];
+                print("agent from builder $agent");
+                return ListTile(
+                  title: Text("${agent.firstName} ${agent.lastName}"),
+                  leading: const CircleAvatar(),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/agent_details');
+                  },
+                );
+              });
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        }
 
-            return ListTile(
-              title: Text(agent.firstName + agent.lastName),
-              leading: const CircleAvatar(),
-              onTap: (){
-                /*Navigator.pushNamed(context, '/agent_details', arguments: agent);*/
-              },
-            );
-          }
-      ),
+        return const CircularProgressIndicator();
+      },
     );
   }
 }

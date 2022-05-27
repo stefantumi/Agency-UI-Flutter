@@ -1,3 +1,5 @@
+import 'package:agencyui/View/AgencyListView.dart';
+import 'package:agencyui/View/MainView.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
@@ -13,47 +15,49 @@ class LoginView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.blue,
-        body: Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.5,
-            margin: const EdgeInsets.all(30),
-            child: Center(
-              child: Card(
-                elevation: 12,
-                margin: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    const Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 36
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextField(
-                        controller: userName,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextField(
-                        controller: password,
-                        obscureText: true,
-                      ),
-                    ),
-                    Flex(
-                      direction: Axis.vertical,
-                      children: [
-                        OutlinedButton(onPressed: (){
-                          Navigator.pushNamed(context, '/agency_listveiw');
-                        }, child: const Text("login")),
-                        OutlinedButton(onPressed: (){}, child: const Text("Sign Up"))
-                      ]
-                    )
-                  ],
+        body: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(40),
+          // height: MediaQuery.of(context).size.height * 0.5,
+          child: Card(
+            elevation: 12,
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Login",
+                  style: TextStyle(
+                    fontSize: 36
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    controller: userName,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    controller: password,
+                    obscureText: true,
+                  ),
+                ),
+                Flex(
+                  direction: Axis.vertical,
+                  children: [
+                    OutlinedButton(
+                        onPressed: (){
+                          // Navigator.popAndPushNamed(context, '/agency_listveiw');
+                          Navigator.push(context, MaterialPageRoute<void>(
+                                     builder: (BuildContext context) => const MainView(),
+                                   ),);
+                    }, child: const Text("login")),
+                    OutlinedButton(onPressed: (){}, child: const Text("Sign Up"))
+                  ]
+                )
+              ],
             ),
           ),
         ),
