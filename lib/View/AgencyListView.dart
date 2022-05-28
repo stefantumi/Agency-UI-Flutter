@@ -1,10 +1,10 @@
 import 'package:agencyui/Actions/AgencyAction.dart';
 import 'package:agencyui/Models/Agency.dart';
+import 'package:agencyui/Widget/AgencyDetails.dart';
 import 'package:flutter/material.dart';
 
 class AgencyListView extends StatefulWidget {
-  const AgencyListView({Key? key/*, required this.title*/}) : super(key: key);
-  /*final String title;*/
+  const AgencyListView({Key? key}) : super(key: key);
 
   @override
   State<AgencyListView> createState() => _AgencyListViewState();
@@ -35,8 +35,14 @@ class _AgencyListViewState extends State<AgencyListView> {
                   title: Text(agency.name.toString()),
                   leading: const CircleAvatar(),
                   onTap: () {
-                    Navigator.pushNamed(context, '/agency_details',
-                        arguments: agency);
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return AgencyDetails(
+                              agencyId: agency.id
+                          );
+                        }),
+                    );
+                    // Navigator.pushNamed(context, '/agency_details', arguments: agency);
                   },
                 );
               });

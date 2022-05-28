@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (BuildContext context) => const LoginView(),
         '/agency_listveiw': (BuildContext context) => const AgencyListView(),
-        '/agency_details': (BuildContext context) => const AgencyDetails(),
       },
       home: Scaffold(
         drawer: NavigationRail(

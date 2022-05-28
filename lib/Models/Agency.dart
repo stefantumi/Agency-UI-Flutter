@@ -28,10 +28,18 @@ class Agency {
     return Agency(
       id: json["id"],
       name: json["name"],
-      properties: List<Property>.from(), //List<Property>.from(json["Properties"].map((property) => Property.fromJson(property))),
-      agents: List<Agent>.from(json['agents'][0]) //List<Agent>.from(json["Agents"].map((agent) => Agent.fromJson(agent))),
+      properties: json['properties'], //List<Property>.from(json["Properties"].map((property) => Property.fromJson(property))),
+      agents: json['agents'] //List<Agent>.from(json["Agents"].map((agent) => Agent.fromJson(agent))),
     );
   }
+/*
+  factory Agency.fromJsonList(List<Map<String, dynamic>> json ) {
+
+    List<Agency> agencies = [];
+
+    json.forEach((element) { agencies.add(Agency.fromJson(element));});
+
+  }*/
 
   /*Map<String, dynamic> toMap() => {
     "id": id,
