@@ -18,6 +18,7 @@ class AgencyDetails extends StatelessWidget {
         child: Column(
           children: [
             Text(agency.id.toString()),
+
             Text(agency.name),
             Text(agency.agents.toString()),
             Text(agency.properties.toString())

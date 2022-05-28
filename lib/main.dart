@@ -7,10 +7,7 @@ import 'package:agencyui/cert.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-
   HttpOverrides.global = MyHttpOverrides();
-
-
   runApp(const MyApp());
 }
 
@@ -44,25 +41,6 @@ class MyApp extends StatelessWidget {
             )
           ],
           selectedIndex: 2,
-        ),
-      ),
-    );
-  }
-}
-
-class LandingView extends StatelessWidget {
-  const LandingView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Column(
-          children: const [
-            Text("this is the landing view"),
-            Text("1"),
-            Text("2")
-          ],
         ),
       ),
     );

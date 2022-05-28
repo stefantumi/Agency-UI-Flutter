@@ -28,12 +28,15 @@ Future<List<Agency>> getAgencyList() async {
 
   List<Agency> parsed = [];
 
+  print("just fetched data");
+  print("Data is ${decodedResponse.first}");
+
   for(int x = 0; x< decodedResponse.length;x++){
 
     parsed.add(Agency.fromJson(decodedResponse[x]));
   }
 
-  print("test data ${parsed[0].runtimeType}");
+  print(parsed.first);
   return parsed;
 }
 

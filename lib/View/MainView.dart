@@ -15,7 +15,9 @@ class _MainViewState extends State<MainView> {
 
   @override
   void _onItemTapped(int index) {
-    _selectedIndex = index;
+    super.setState(() {
+      _selectedIndex = index;
+    });
   }
 
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -24,9 +26,9 @@ class _MainViewState extends State<MainView> {
     AgentListView(),
     PropertyListView(title: 'title')
   ];
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(),
       body: Center(

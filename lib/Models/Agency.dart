@@ -8,8 +8,8 @@ import 'Property.dart';
 class Agency {
   final int id;
   final String name;
-  final List<Property>? properties;
-  final List<Agent>? agents;
+  final List<dynamic>? properties;
+  final List<dynamic>? agents;
 
   Agency({
     required this.id,
@@ -19,12 +19,17 @@ class Agency {
   });
 
 
+  /*for (var element in data) {
+  ages.add(Agency.fromJson(element));
+  }*/
+
+
   factory Agency.fromJson(Map<dynamic, dynamic> json) {
     return Agency(
       id: json["id"],
       name: json["name"],
-      /*properties: List<Property>.from(json["Properties"].map((x) => x)),*/
-      /*agents: List<Agent>.from(json["Agents"].map((x) => x)),*/
+      properties: List<Property>.from(), //List<Property>.from(json["Properties"].map((property) => Property.fromJson(property))),
+      agents: List<Agent>.from(json['agents'][0]) //List<Agent>.from(json["Agents"].map((agent) => Agent.fromJson(agent))),
     );
   }
 
