@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import '../Models/Property.dart';
@@ -10,17 +11,38 @@ String serverHost = "192.168.1.237";
 
 /// PROPERTY Create POST
 /// Creating an Property requires an [Property] object sent from BODY
-Future<Property> createProperty(Property newProperty) async {
+Future createProperty(Property newProperty) async {
+  print("newProperty: ${newProperty}");
+
+  print("start");
+  print(newProperty.id.toString());
+  print(newProperty.address.id.toString());
+  print(newProperty.address.street.toString());
+  print(newProperty.address.houseNo.toString());
+  print(newProperty.address.zip.toString());
+  print(newProperty.price.toString());
+  print(newProperty.size.toString());
+  print(newProperty.buyer.toString());
+  print(newProperty.owner.toString());
+  print("end");
+
+
+
   Uri url = Uri.parse("https://$serverHost:7210/api/property");
-  var response = await http.post(url, body: newProperty);
+  var response = await http.post(url,
+  headers: <String, String> {
+    'Content-Type':'application/json; charset=UTF-8',
+  },
+  body: jsonEncode(
+    {
+        newProperty.toMap()
+    }
+  ));
+
 
   // TODO: remove 200 or 201 statuscode check
 
-  if(response.statusCode == 200 || response.statusCode == 201){
-    return Property.fromJson(jsonDecode(response.body));
-  }else{
-    throw Exception('failed to fetch Property');
-  }
+
 }
 
 /// PROPERTY READ GET

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'APerson.dart';
 
 class Buyer extends Person{
@@ -11,18 +10,17 @@ class Buyer extends Person{
   });
 
 
-  factory Buyer.fromJson(String str) => Buyer.fromMap(json.decode(str));
+/*  factory Buyer.fromJson(String str) => Buyer.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());*/
 
-  factory Buyer.fromMap(Map<String, dynamic> json) => Buyer(
+  factory Buyer.fromJson(Map<String, dynamic> json) => Buyer(
     id: json["id"],
     firstName: json["firstName"],
     lastName: json["lastName"],
     ssid: json["ssid"],
   );
 
-  @override
   Map<String, dynamic> toMap() => {
     "id": id,
     "firstName": firstName,

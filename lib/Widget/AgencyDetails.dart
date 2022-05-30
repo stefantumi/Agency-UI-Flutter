@@ -1,8 +1,9 @@
 import 'package:agencyui/Actions/AgencyAction.dart';
 import 'package:agencyui/Models/Agency.dart';
+import 'package:agencyui/Widget/Forms/AgentForm.dart';
+import 'package:agencyui/Widget/Forms/Property/PropertyForm.dart';
+import 'package:agencyui/Widget/Forms/Property/PropertyFormCreate.dart';
 import 'package:flutter/material.dart';
-
-import '../Models/Property.dart';
 
 
 class AgencyDetails extends StatefulWidget {
@@ -32,32 +33,41 @@ class _AgencyDetailsState extends State<AgencyDetails> {
             IconButton(onPressed: (){}, icon: const Icon(Icons.settings))
           ],
         ),
-        body: FutureBuilder<Agency>(
-          future: futureAgency,
-          builder: (context, snapshot){
-            print("snapshot: ${snapshot.data}");
-            if(snapshot.hasData){
-              return Card(
-                child: Column(
-                  children: [
-                    Text(snapshot.data!.id.toString()),
-                    Text(snapshot.data!.name),
-                    Properties(property: snapshot.data!.properties!),
-                    Text(snapshot.data!.agents.toString()),
-                    // Text(snapshot.data!.properties.toString())
-                  ],
-                ),
-              );
-            } else if( snapshot.hasError){
-              return Text("Failed to retrieve Agency ${snapshot.error}");
-            }
-            return const CircularProgressIndicator();
-          },
+        body: SingleChildScrollView(
+          child: FutureBuilder<Agency>(
+            future: futureAgency,
+            builder: (context, snapshot){
+              print("snapshot agency: ${snapshot.data}");
+              if(snapshot.hasData){
+                return Card(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: Card(
+                          color: Colors.blue,
+                          child: Center(
+                              child: Text(snapshot.data!.name.toString(), style: const TextStyle(fontSize: 40)),
+                          ),
+                        ),
+                      ),
+                      Properties(property: snapshot.data!.properties!),
+                      Agents(agents: snapshot.data!.agents!)
+
+                    ],
+                  ),
+                );
+              } else if( snapshot.hasError){
+                return Center(child: Text("Failed to retrieve Agency ${snapshot.error}"));
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
         )
     );
   }
 }
-
 
 class Properties extends StatelessWidget {
   const Properties({Key? key, required this.property}) : super(key: key);
@@ -66,97 +76,96 @@ class Properties extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 30,
-      child: ListView.builder(
-          itemCount: property.length,
-          itemBuilder: (BuildContext context, index){
-            return ListTile(
-              title: Card(
-                child: Column(
-                  children: [
-                    Text(property[index]['id'].toString()),
-                    Text(property[index]['address'].toString())
-                  ],
-                ),
-              ),
-            );
-          }
-      ),
-    );
-  }
-}
-
-
-
-/*
-class PropertyListing extends StatefulWidget {
-  const PropertyListing({Key? key,required this.properties}) : super(key: key);
-
-  final List<Property> properties;
-
-  @override
-  State<PropertyListing> createState() => _PropertyListingState();
-}
-
-class _PropertyListingState extends State<PropertyListing> {
-
-  @override
-  initState(){
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: widget.properties.length,
-        itemBuilder: (BuildContext context, index) {
-          // Property property =
-          ListTile(
-            title: Text(''),
-          );
-        }
-    );
-  }
-}
-*/
-
-
-/*class AgencyDetails extends StatelessWidget {
-  const AgencyDetails({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final Agency agency = ModalRoute.of(context)!.settings.arguments as Agency;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(agency.name),
-        actions: [
-
-          IconButton(onPressed: (){}, icon: const Icon(Icons.settings))
+    return Card(
+      elevation: 20,
+      child: Column(
+        children: [
+          Card(
+            margin: const EdgeInsets.all(8),
+            color: Colors.grey,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Properties", style: TextStyle(fontSize: 30),),
+                IconButton(onPressed: (){
+                  propertyDialogCreate(context);
+                },
+                    icon: const Icon(Icons.add),
+                )
+              ],
+            ),
+          ),
+          SingleChildScrollView(
+            child: SizedBox(
+              height: 250,
+              child: ListView.builder(
+                  itemCount: property.length,
+                  itemBuilder: (BuildContext context, index){
+                    return ListTile(
+                        title: Text(property[index]['address']['street'].toString()),
+                        leading: CircleAvatar(
+                          child: Text(property[index]['id'].toString()),
+                        ),
+                        trailing: IconButton(
+                            icon: const Icon(Icons.edit),
+                            onPressed: () {
+                              propertyDialog(context, property[index]);
+                            }
+                            ),
+                    );
+                  }
+                  ),
+            ),
+          ),
         ],
       ),
-      body: FutureBuilder<Agency>(
-        future: ,
-        builder: (context, snapshot){
-          if(snapshot.hasData){
-            return Card(
-                  child: Column(
-                    children: [
-                      Text(agency.id.toString()),
-
-                      Text(agency.name),
-                      Text(agency.agents.toString()),
-                      Text(agency.properties.toString())
-                    ],
-                  ),
-                );
-              } else if( snapshot.hasError){
-            return Text("Failed to retrieve Agency ${snapshot.error}");
-          }
-          return const CircularProgressIndicator();
-        },
-      )
     );
   }
-}*/
+}
+
+class Agents extends StatelessWidget {
+  const Agents({Key? key, required this.agents}) : super(key: key);
+
+  final List<dynamic> agents;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 20,
+      child: Column(
+        children: [
+          const Text("Agents",
+            style: TextStyle(
+                fontSize: 30
+            ),
+          ),
+          SingleChildScrollView(
+            child: SizedBox(
+              height: 250,
+              child: ListView.builder(
+                  itemCount: agents.length,
+                  itemBuilder: (BuildContext context, index){
+                    return ListTile(
+                      leading: CircleAvatar(
+                        child:  Text(agents[index]['id'].toString()),
+                      ),
+                      title: Column(
+                        children: [
+                          Text(agents[index]['firstName'].toString()),
+                          Text(agents[index]['lastName'].toString())
+                        ],
+                      ),
+                      trailing: IconButton(icon: const Icon(Icons.edit), onPressed: () {
+                        agentDialog(context, agents[index]);
+                      },
+                      ),
+                    );
+                  }
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

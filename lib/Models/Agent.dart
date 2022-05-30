@@ -14,11 +14,7 @@ class Agent extends Person{
     required this.catalogue
   });
 
-  factory Agent.fromJson(String str) => Agent.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory Agent.fromMap(Map<String, dynamic> json) => Agent(
+  factory Agent.fromJson(Map<String, dynamic> json) => Agent(
     id: json["id"],
     firstName: json["firstName"],
     lastName: json["lastName"],

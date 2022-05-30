@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Address {
   final int id;
   final String street;
@@ -13,16 +11,14 @@ class Address {
     required this.zip,
   });
 
-  factory Address.fromJson(String str) => Address.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory Address.fromMap(Map<String, dynamic> json) => Address(
-    id: json["id"],
-    street: json["street"],
-    houseNo: json["houseNo"],
-    zip: json["zip"],
-  );
+  factory Address.fromJson(Map<String, dynamic> json){
+    return Address(
+      id: json["id"],
+      street: json["street"],
+      houseNo: json["houseNo"],
+      zip: json["zip"],
+    );
+  }
 
   Map<String, dynamic> toMap() => {
     "id": id,

@@ -14,11 +14,11 @@ class Owner extends Person{
     required this.property,
     });
 
-  factory Owner.fromJson(String str) => Owner.fromMap(json.decode(str));
+/*  factory Owner.fromJson(String str) => Owner.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());*/
 
-  factory Owner.fromMap(Map<String, dynamic> json) => Owner(
+  factory Owner.fromJson(Map<String, dynamic> json) => Owner(
     id: json["id"],
     firstName: json["firstName"],
     lastName: json["lastName"],

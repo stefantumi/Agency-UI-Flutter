@@ -33,7 +33,9 @@ class _AgencyListViewState extends State<AgencyListView> {
                 print("agency from builder $agency");
                 return ListTile(
                   title: Text(agency.name.toString()),
-                  leading: const CircleAvatar(),
+                  leading: CircleAvatar(
+                    child: Text(agency.id.toString()),
+                  ),
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(
                         builder: (BuildContext context) {
