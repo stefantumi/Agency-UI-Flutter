@@ -1,48 +1,26 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import '../Models/Property.dart';
 
-
-String serverHost = "192.168.1.237";
-
-
+String serverHost = "localhost";
 
 /// PROPERTY Create POST
 /// Creating an Property requires an [Property] object sent from BODY
 Future createProperty(Property newProperty) async {
-  print("newProperty: ${newProperty}");
-
-  print("start");
-  print(newProperty.id.toString());
-  print(newProperty.address.id.toString());
-  print(newProperty.address.street.toString());
-  print(newProperty.address.houseNo.toString());
-  print(newProperty.address.zip.toString());
-  print(newProperty.price.toString());
-  print(newProperty.size.toString());
-  print(newProperty.buyer.toString());
-  print(newProperty.owner.toString());
-  print("end");
-
-
-
+  var encoded = jsonEncode(newProperty.toMap());
   Uri url = Uri.parse("https://$serverHost:7210/api/property");
-  var response = await http.post(url,
-  headers: <String, String> {
-    'Content-Type':'application/json; charset=UTF-8',
-  },
-  body: jsonEncode(
-    {
-        newProperty.toMap()
-    }
-  ));
+  http.Response response = await http.post(url, headers: <String, String> {'Content-Type':'application/json; charset=UTF-8',}, body: encoded);
 
-
-  // TODO: remove 200 or 201 statuscode check
-
-
+  if(response.statusCode == 201 || response.statusCode == 200) {
+    print(response.statusCode);
+    return response;
+  }else{
+    print("Failed to save data");
+    return response;
+  }
+  // TODO: Add the property to the agency listing
+  // TODO: return a [Response] so you can inform the user of success or failure (details about the failure)
 }
 
 /// PROPERTY READ GET
@@ -51,13 +29,7 @@ Future<List<Property>> getPropertyList() async {
 
   if(response.statusCode == 200 || response.statusCode == 201){
     final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
-
-/*    return (json.decode(response.body) as List)
-        .map((e) => Agency.fromMap(e))
-        .toList();*/
-
     return parsed.map<Property>((json) => Property.fromJson(json)).toList();
-
   }else{
     throw Exception('failed to fetch Property');
   }
@@ -77,11 +49,12 @@ Future<Property> getPropertyById(int id) async {
 
 
 /// PROPERTY UPDATE PUT
-/// The only editable attr in [Property] is the name
+/// The editable attr in [Property] are size and price, maybe address too ?
 
-Future<http.BaseResponse> updatePropertyById(int id, String newName) async {
-  var url = Uri.parse("https://$serverHost:7210/api/Property/$id");
-  var onlineProperty = await http.put(url, body: newName);
+Future<http.BaseResponse> updatePropertyById(int id) async {
+  var url = Uri.parse("https://$serverHost:7210/api/property/$id");
+  var onlineProperty = await http.get(url);
+
   return onlineProperty;
 }
 

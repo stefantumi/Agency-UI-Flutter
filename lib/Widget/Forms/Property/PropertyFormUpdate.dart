@@ -1,14 +1,12 @@
 import 'package:agencyui/Actions/PropertyActions.dart';
 import 'package:agencyui/Models/Address.dart';
-import 'package:agencyui/Models/Owner.dart';
 import 'package:agencyui/Models/Property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 
-void propertyDialogCreate(context){
-
+void propertyDialogCreate(context, id){
 
 
   TextEditingController streetController = TextEditingController(text: 'Street Name');
@@ -57,33 +55,33 @@ void propertyDialogCreate(context){
                           ),
                         ),
                         Card(
-                          margin: const EdgeInsets.all(16),
-                          color: Colors.grey,
-                          child: Column(
-                            children: [
-                              TextField(
-                                decoration: const InputDecoration(
-                                    filled: true,
-                                    labelText: 'Street Name'
+                            margin: const EdgeInsets.all(16),
+                            color: Colors.grey,
+                            child: Column(
+                              children: [
+                                TextField(
+                                  decoration: const InputDecoration(
+                                      filled: true,
+                                      labelText: 'Street Name'
+                                  ),
+                                  controller: streetController,
                                 ),
-                                controller: streetController,
-                              ),
-                              TextField(
-                                decoration: const InputDecoration(
-                                    filled: true,
-                                    labelText: 'House Number'
+                                TextField(
+                                  decoration: const InputDecoration(
+                                      filled: true,
+                                      labelText: 'House Number'
+                                  ),
+                                  controller: houseNoController,
                                 ),
-                                controller: houseNoController,
-                              ),
-                              TextField(
-                                decoration: const InputDecoration(
-                                    filled: true,
-                                    labelText: 'Post Code'
+                                TextField(
+                                  decoration: const InputDecoration(
+                                      filled: true,
+                                      labelText: 'Post Code'
+                                  ),
+                                  controller: zipController,
                                 ),
-                                controller: zipController,
-                              ),
-                            ],
-                          )
+                              ],
+                            )
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -107,13 +105,13 @@ void propertyDialogCreate(context){
                                 ),
                                 child: const Text("apply"),
                                 onPressed: (){
-                                  createProperty(Property(address: Address(
+                               /*   createProperty(Property(address: Address(
                                       street: streetController.text,
                                       houseNo: int.parse(houseNoController.text.toString()),
                                       zip: int.parse(zipController.text.toString())),
                                       size: double.parse(sizeController.text.toString()),
-                                      price: double.parse(priceController.text.toString())));
-
+                                      price: double.parse(priceController.text.toString())));*/
+                                  updatePropertyById(id);
                                   Navigator.of(context).pop();
                                 },
                               ),

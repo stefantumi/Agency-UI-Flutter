@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../Models/Agency.dart';
 
 
-String serverHost = "192.168.1.237";
+String serverHost = "localhost";
 
 /// AGENCY Create POST
 /// Creating an agency requires an [Agency] object sent from BODY
@@ -42,13 +42,22 @@ Future<List<Agency>> getAgencyList() async {
 
 
 /// AGENCIES READ
+
+
 Future<Agency> getAgencyById(int id) async {
+
   var response = await http.get(Uri.parse("https://$serverHost:7210/api/agency/$id"));
+
+  var decodedResponse = json.decode(response.body);
+
+  return decodedResponse;
+
+  /*  var response = await http.get(Uri.parse("https://$serverHost:7210/api/agency/$id"));
   if(response.statusCode == 200 || response.statusCode == 201){
     return Agency.fromJson(jsonDecode(response.body));
   }else{
     throw Exception('failed to fetch Agency by id: $id');
-  }
+  }*/
 }
 
 

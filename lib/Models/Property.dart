@@ -12,7 +12,7 @@ class Property {
   final Buyer? buyer;
 
   Property({
-    required this.id,
+    this.id,
     required this.address,
     required this.size,
     required this.price,
@@ -22,22 +22,24 @@ class Property {
 
   factory Property.fromJson(Map<dynamic, dynamic> json) {
     return Property(
-      id: json["id"],
+      id: json["id"] == null ? null : json['id'],
       address: Address.fromJson(json["address"]),
       size: json["size"],
       price: json["price"],
-      owner: Owner.fromJson(json["Owner"]),
-      buyer: Buyer.fromJson(json["Buyer"]),
+      owner: json['Owner'] == null ? null : Owner.fromJson(json["Owner"]),
+      buyer: json['Buyer'] == null ? null : Buyer.fromJson(json["Buyer"]),
     );
   }
 
-  Map<dynamic, dynamic> toMap() => {
-    "id" : id ,
-    "address": address ,
+  Map<String, dynamic> toMap() => {
+/*
+    "id" : id,
+*/
+    "address": address.toMap() ,
     "size" : size ,
     "price" : price ,
-    "Owner" : owner ,
-    "Buyer": buyer ,
+    "Owner" : owner,
+    "Buyer": buyer,
   };
 
 }

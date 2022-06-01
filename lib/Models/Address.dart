@@ -1,11 +1,11 @@
 class Address {
-  final int id;
+  final int? id;
   final String street;
   final int houseNo;
   final int zip;
 
   Address({
-    required this.id,
+    this.id,
     required this.street,
     required this.houseNo,
     required this.zip,
@@ -21,7 +21,7 @@ class Address {
   }
 
   Map<String, dynamic> toMap() => {
-    "id": id,
+    /*"id": id,*/
     "street": street,
     "houseNo": houseNo,
     "zip": zip,
