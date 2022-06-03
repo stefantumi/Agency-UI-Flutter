@@ -4,12 +4,12 @@ import 'package:flutter/services.dart';
 
 
 void propertyDialog(context, dynamic property){
-  TextEditingController streetTextCtrl = TextEditingController(text: property['address']['street']);
-  TextEditingController houseNoTextCtrl = TextEditingController(text: property['address']['houseNo']);
-  TextEditingController zipTextCtrl = TextEditingController(text: property['address']['zip']);
+  TextEditingController streetTextCtrl = TextEditingController();
+  TextEditingController houseNoTextCtrl = TextEditingController();
+  TextEditingController zipTextCtrl = TextEditingController();
 
-  TextEditingController sizeTextCtrl = TextEditingController(text: property['size'].toString());
-  TextEditingController priceTextCtrl = TextEditingController(text: property['price'].toString());
+  TextEditingController sizeTextCtrl = TextEditingController();
+  TextEditingController priceTextCtrl = TextEditingController();
 
   showDialog(
       context: context,
@@ -31,28 +31,28 @@ void propertyDialog(context, dynamic property){
                         controller: streetTextCtrl,
                         decoration: InputDecoration(
                             filled: true,
-                            labelText: "${property['address']['street'].toString()}"
+                            labelText: property['address']['street'].toString()
                         ),
                       ),
                       TextField(
                         controller: houseNoTextCtrl,
                         decoration: InputDecoration(
                             filled: true,
-                            labelText: "${property['address']['houseNo'].toString()}"
+                            labelText: property['address']['houseNo'].toString()
                         ),
                       ),
                       TextField(
                         controller: zipTextCtrl,
                         decoration: InputDecoration(
                             filled: true,
-                            labelText: "${property['address']['zip'].toString()}"
+                            labelText: property['address']['zip'].toString()
                         ),
                       ),
                       TextField(
                         controller: sizeTextCtrl,
-                        inputFormatters: <TextInputFormatter>[
+                        /*inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
-                        ],
+                        ],*/
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                             filled: true,
@@ -61,9 +61,9 @@ void propertyDialog(context, dynamic property){
                       ),
                       TextField(
                         controller: priceTextCtrl,
-                        inputFormatters: <TextInputFormatter>[
+                        /*inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
-                        ],
+                        ],*/
                         decoration: InputDecoration(
                             filled: true,
                             labelText: property['price'].toString()
@@ -91,18 +91,26 @@ void propertyDialog(context, dynamic property){
                               ),
                               onPressed: (){
                                 print("$property");
+                                print("prufa ${<String,dynamic> {
+                                  "address":<String,dynamic>{
+                                    "street":streetTextCtrl.value.text.toString(),
+                                    "houseNo": houseNoTextCtrl.text.toString(),
+                                    "zip": zipTextCtrl.text.toString()
+                                  },
+                                  "size": sizeTextCtrl.text.toString(),
+                                  "price": priceTextCtrl.text.toString()
+                                }}");
                                 updatePropertyById(
-                                  <String,dynamic> {
-                                    "id":"${property['id']}",
-                                    "address":<String,dynamic>{
-                                      "id":"${property['address']['id']}",
-                                      "street":streetTextCtrl.value.text,
-                                      "houseNo": houseNoTextCtrl.text.toString(),
-                                      "zip": zipTextCtrl.text.toString()
-                                    },
-                                    "size":"${property['size']}",
-                                    "price":"${property['price']}"
-                                }
+                                    <String,dynamic> {
+                                      "id":property['id'],
+                                      "address":<String,dynamic>{
+                                        "street":streetTextCtrl.value.text.toString(),
+                                        "houseNo": houseNoTextCtrl.text.toString(),
+                                        "zip": zipTextCtrl.text.toString()
+                                      },
+                                      "size": sizeTextCtrl.text.toString(),
+                                      "price": priceTextCtrl.text.toString()
+                                    }
                                 );
                                 Navigator.of(context).pop();
                               },

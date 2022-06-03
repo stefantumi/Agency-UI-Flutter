@@ -30,7 +30,6 @@ class _AgencyListViewState extends State<AgencyListView> {
               padding: const EdgeInsets.all(16),
               itemBuilder: (context, index) {
                 Agency agency = snapshot.data[index];
-                print("agency from builder $agency");
                 return ListTile(
                   title: Text(agency.name.toString()),
                   leading: CircleAvatar(
@@ -40,7 +39,6 @@ class _AgencyListViewState extends State<AgencyListView> {
                     Navigator.push(context, MaterialPageRoute(
                         builder: (BuildContext context) {
                           return AgencyDetails(
-                              /*agency: agency,*/
                             agencyId: agency.id,
                           );
                         }),

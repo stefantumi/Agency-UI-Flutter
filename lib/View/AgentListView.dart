@@ -5,8 +5,7 @@ import '../Models/Agent.dart';
 
 
 class AgentListView extends StatefulWidget {
-  const AgentListView({Key? key/*, required this.title*/}) : super(key: key);
-  /*final String title;*/
+  const AgentListView({Key? key}) : super(key: key);
 
   @override
   State<AgentListView> createState() => _AgencyListViewState();
@@ -32,7 +31,6 @@ class _AgencyListViewState extends State<AgentListView> {
               padding: const EdgeInsets.all(16),
               itemBuilder: (context, index) {
                 Agent agent = snapshot.data[index];
-                print("agent from builder $agent");
                 return ListTile(
                   title: Text("${agent.firstName} ${agent.lastName}"),
                   leading: const CircleAvatar(),
@@ -42,9 +40,10 @@ class _AgencyListViewState extends State<AgentListView> {
                 );
               });
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        }
 
+          return Text(snapshot.error.toString());
+
+        }
         return const CircularProgressIndicator();
       },
     );
