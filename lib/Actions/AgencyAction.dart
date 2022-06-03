@@ -50,7 +50,7 @@ Future<Agency> getAgencyById(int id) async {
 
   var decodedResponse = json.decode(response.body);
 
-  return decodedResponse;
+  return Agency.fromJson(decodedResponse);
 
   /*  var response = await http.get(Uri.parse("https://$serverHost:7210/api/agency/$id"));
   if(response.statusCode == 200 || response.statusCode == 201){

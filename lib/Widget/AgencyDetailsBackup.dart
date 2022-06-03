@@ -1,5 +1,6 @@
 import 'package:agencyui/Actions/AgencyAction.dart';
 import 'package:agencyui/Models/Agency.dart';
+import 'package:agencyui/Models/Property.dart';
 import 'package:agencyui/Widget/Forms/AgentForm.dart';
 import 'package:agencyui/Widget/Forms/Property/PropertyForm.dart';
 import 'package:agencyui/Widget/Forms/Property/PropertyFormCreate.dart';
@@ -7,22 +8,21 @@ import 'package:flutter/material.dart';
 
 
 class AgencyDetails extends StatefulWidget {
-  const AgencyDetails({Key? key, required this.agencyId}) : super(key: key);
-
-  final int agencyId;
-
+  const AgencyDetails({Key? key, required this.agency}) : super(key: key);
+  final Agency agency;
+  /*final int agencyId;*/
   @override
   State<AgencyDetails> createState() => _AgencyDetailsState();
 }
 
 class _AgencyDetailsState extends State<AgencyDetails> {
-  late Future<Agency> futureAgency;
+  /*late Future<Agency> futureAgency;*/
 
-  @override
+/*  @override
   initState(){
     super.initState();
     futureAgency = getAgencyById(widget.agencyId);
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -34,35 +34,25 @@ class _AgencyDetailsState extends State<AgencyDetails> {
           ],
         ),
         body: SingleChildScrollView(
-          child: FutureBuilder<Agency>(
-            future: futureAgency,
-            builder: (context, snapshot){
-              if(snapshot.hasData){
-                return Card(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: Card(
-                          color: Colors.blue,
-                          child: Center(
-                              child: Text(snapshot.data!.name.toString(), style: const TextStyle(fontSize: 40)),
-                          ),
-                        ),
-                      ),
-                      Properties(property: snapshot.data!.properties!),
-                      Agents(agents: snapshot.data!.agents!)
-
-                    ],
+          child: Card(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Card(
+                    color: Colors.blue,
+                    child: Center(
+                      child: Text(widget.agency.name.toString(), style: const TextStyle(fontSize: 40)),
+                    ),
                   ),
-                );
-              } else if( snapshot.hasError){
-                return Center(child: Text("Failed to retrieve Agency ${snapshot.error}"));
-              }
-              return const Center(child: CircularProgressIndicator());
-            },
-          ),
+                ),
+                Properties(property: widget.agency.properties!),
+                Agents(agents: widget.agency.agents!)
+
+              ],
+            ),
+          )
         )
     );
   }

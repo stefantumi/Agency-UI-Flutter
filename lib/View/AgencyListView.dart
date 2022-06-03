@@ -40,18 +40,17 @@ class _AgencyListViewState extends State<AgencyListView> {
                     Navigator.push(context, MaterialPageRoute(
                         builder: (BuildContext context) {
                           return AgencyDetails(
-                              agencyId: agency.id
+                              /*agency: agency,*/
+                            agencyId: agency.id,
                           );
                         }),
                     );
-                    // Navigator.pushNamed(context, '/agency_details', arguments: agency);
                   },
                 );
               });
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         }
-
         return const CircularProgressIndicator();
       },
     );

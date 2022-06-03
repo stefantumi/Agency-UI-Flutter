@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         '/login': (BuildContext context) => const LoginView(),
         '/agency_listveiw': (BuildContext context) => const AgencyListView(),
       },
-      home: Scaffold(
+    /*home: Scaffold(
         drawer: NavigationRail(
           destinations: const [
             NavigationRailDestination(
@@ -40,8 +40,7 @@ class MyApp extends StatelessWidget {
             )
           ],
           selectedIndex: 2,
-        ),
-      ),
+        ),*/
     );
   }
 }

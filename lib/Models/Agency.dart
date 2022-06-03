@@ -14,7 +14,6 @@ class Agency {
   });
 
 
-
   factory Agency.fromJson(Map<dynamic, dynamic> json) {
     return Agency(
       id: json["id"],
@@ -23,4 +22,11 @@ class Agency {
       agents: json['agents']
     );
   }
+
+  Map<String, dynamic> toMap() => {
+    "id" : id,
+    "name" : name,
+    "properties" : properties,
+    "agents" : agents
+  };
 }
