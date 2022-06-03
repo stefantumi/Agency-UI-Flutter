@@ -1,12 +1,12 @@
 import 'package:agencyui/Actions/PropertyActions.dart';
+import 'package:agencyui/Widget/Forms/Property/PropertyForm.dart';
 import 'package:flutter/material.dart';
 
 import '../Models/Property.dart';
 
 
 class PropertyListView extends StatefulWidget {
-  const PropertyListView({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const PropertyListView({Key? key}) : super(key: key);
 
   @override
   State<PropertyListView> createState() => _PropertyListViewState();
@@ -24,10 +24,7 @@ class _PropertyListViewState extends State<PropertyListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: FutureBuilder<List<Property>>(
+      body: FutureBuilder<List<dynamic>>(
         future: futureProperties,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
@@ -36,13 +33,16 @@ class _PropertyListViewState extends State<PropertyListView> {
                 padding: const EdgeInsets.all(16),
                 itemBuilder: (context, index) {
                   Property property = snapshot.data[index];
-                  print("property from builder $property");
                   return ListTile(
-                    title: Text(property.id.toString()),
-                    leading: const CircleAvatar(),
+                    dense: true,
+                    isThreeLine: true,
+                    title: Text(property.address.street.toString()),
+                    subtitle: Text("House Number: ${property.address.houseNo.toString()} ZIP: ${property.address.zip.toString()}"),
+                    leading: CircleAvatar(
+                      child: Text(property.id.toString()),
+                    ),
                     onTap: () {
-                      Navigator.pushNamed(context, '/property_details',
-                          arguments: property);
+                      propertyDialog(context, property.toMap());
                     },
                   );
                 });

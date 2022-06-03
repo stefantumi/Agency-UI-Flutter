@@ -20,11 +20,10 @@ class _MainViewState extends State<MainView> {
     });
   }
 
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     AgencyListView(),
     AgentListView(),
-    PropertyListView(title: 'title')
+    PropertyListView()
   ];
 
   @override

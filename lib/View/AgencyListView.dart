@@ -1,6 +1,6 @@
 import 'package:agencyui/Actions/AgencyAction.dart';
 import 'package:agencyui/Models/Agency.dart';
-import 'package:agencyui/Widget/AgencyDetails.dart';
+import 'package:agencyui/View/AgencyDetailsView.dart';
 import 'package:flutter/material.dart';
 
 class AgencyListView extends StatefulWidget {

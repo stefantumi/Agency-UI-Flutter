@@ -1,11 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../Models/Agent.dart';
 
-
 String serverHost = "localhost";
-
 
 /// AGENT Create POST
 /// Creating an Agent requires an [Agent] object sent from BODY
@@ -28,10 +25,6 @@ Future<List<Agent>> getAgentList() async {
 
   if(response.statusCode == 200 || response.statusCode == 201){
     final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
-
-/*    return (json.decode(response.body) as List)
-        .map((e) => Agency.fromMap(e))
-        .toList();*/
 
     return parsed.map<Agent>((json) => Agent.fromJson(json)).toList();
   }else{

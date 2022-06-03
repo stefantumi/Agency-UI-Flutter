@@ -7,14 +7,13 @@ import 'package:flutter/services.dart';
 
 void propertyDialogCreate(context){
 
+  TextEditingController streetNameController = TextEditingController();
+  TextEditingController houseNoController = TextEditingController();
+  TextEditingController zipController = TextEditingController();
 
+  TextEditingController sizeController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
 
-  TextEditingController streetController = TextEditingController(text: 'Street Name');
-  TextEditingController houseNoController = TextEditingController(text: 'House Number');
-  TextEditingController zipController = TextEditingController(text: 'Post Code');
-  TextEditingController sizeController = TextEditingController(text: 'Property Size');
-  TextEditingController priceController = TextEditingController(text: 'Property Price');
-  TextEditingController a = TextEditingController(text: '');
 
 
   showDialog(
@@ -27,13 +26,7 @@ void propertyDialogCreate(context){
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children:  [
-                        /*TextField(
-                          enabled: false,
-                          decoration: InputDecoration(
-                              filled: true,
-                              labelText: formProperty.id.toString()
-                          ),
-                        ),*/
+                        const Text("Property"),
                         TextField(
                           controller: sizeController,
                           inputFormatters: <TextInputFormatter>[
@@ -47,6 +40,9 @@ void propertyDialogCreate(context){
                         ),
                         TextField(
                           controller: priceController,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           decoration: const InputDecoration(
                               filled: true,
                               labelText: 'Price'
@@ -57,26 +53,35 @@ void propertyDialogCreate(context){
                           color: Colors.grey,
                           child: Column(
                             children: [
+                              const Text("Address"),
                               TextField(
                                 decoration: const InputDecoration(
                                     filled: true,
                                     labelText: 'Street Name'
                                 ),
-                                controller: streetController,
+                                controller: streetNameController,
                               ),
                               TextField(
+                                controller: houseNoController,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 decoration: const InputDecoration(
                                     filled: true,
                                     labelText: 'House Number'
                                 ),
-                                controller: houseNoController,
+
                               ),
                               TextField(
+                                controller: zipController,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 decoration: const InputDecoration(
                                     filled: true,
                                     labelText: 'Post Code'
                                 ),
-                                controller: zipController,
+
                               ),
                             ],
                           )
@@ -105,7 +110,7 @@ void propertyDialogCreate(context){
                                 onPressed: (){
                                   createProperty(Property(
                                       address: Address(
-                                          street: streetController.text,
+                                          street: streetNameController.text,
                                           houseNo: int.parse(houseNoController.text.toString()),
                                           zip: int.parse(zipController.text.toString())),
                                       size: double.parse(sizeController.text.toString()),

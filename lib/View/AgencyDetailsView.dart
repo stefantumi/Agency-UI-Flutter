@@ -1,7 +1,6 @@
 import 'package:agencyui/Actions/AgencyAction.dart';
 import 'package:agencyui/Actions/PropertyActions.dart';
 import 'package:agencyui/Models/Agency.dart';
-import 'package:agencyui/Models/Property.dart';
 import 'package:agencyui/Widget/Forms/AgentForm.dart';
 import 'package:agencyui/Widget/Forms/Property/PropertyForm.dart';
 import 'package:agencyui/Widget/Forms/Property/PropertyFormCreate.dart';

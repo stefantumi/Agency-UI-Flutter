@@ -20,53 +20,59 @@ void propertyDialog(context, dynamic property){
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children:  [
-                      TextField(
+                      const TextField(
                         enabled: false,
                         decoration: InputDecoration(
                             filled: true,
-                            labelText: property['id'].toString()
+                            labelText: 'ID'
                         ),
                       ),
                       TextField(
                         controller: streetTextCtrl,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             filled: true,
-                            labelText: property['address']['street'].toString()
+                            labelText: 'Street Name'
                         ),
                       ),
                       TextField(
                         controller: houseNoTextCtrl,
-                        decoration: InputDecoration(
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: const InputDecoration(
                             filled: true,
-                            labelText: property['address']['houseNo'].toString()
+                            labelText:'house number'
                         ),
                       ),
                       TextField(
                         controller: zipTextCtrl,
-                        decoration: InputDecoration(
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: const InputDecoration(
                             filled: true,
-                            labelText: property['address']['zip'].toString()
+                            labelText: 'Post Code'
                         ),
                       ),
                       TextField(
                         controller: sizeTextCtrl,
-                        /*inputFormatters: <TextInputFormatter>[
+                        inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
-                        ],*/
+                        ],
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             filled: true,
-                            labelText: property['size'].toString()
+                            labelText: 'Size Sq/m'
                         ),
                       ),
                       TextField(
                         controller: priceTextCtrl,
-                        /*inputFormatters: <TextInputFormatter>[
+                        inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
-                        ],*/
-                        decoration: InputDecoration(
+                        ],
+                        decoration: const InputDecoration(
                             filled: true,
-                            labelText: property['price'].toString()
+                            labelText: 'Price'
                         ),
                       ),
                       Row(
@@ -90,16 +96,6 @@ void propertyDialog(context, dynamic property){
                               style: const ButtonStyle(
                               ),
                               onPressed: (){
-                                print("$property");
-                                print("prufa ${<String,dynamic> {
-                                  "address":<String,dynamic>{
-                                    "street":streetTextCtrl.value.text.toString(),
-                                    "houseNo": houseNoTextCtrl.text.toString(),
-                                    "zip": zipTextCtrl.text.toString()
-                                  },
-                                  "size": sizeTextCtrl.text.toString(),
-                                  "price": priceTextCtrl.text.toString()
-                                }}");
                                 updatePropertyById(
                                     <String,dynamic> {
                                       "id":property['id'],
