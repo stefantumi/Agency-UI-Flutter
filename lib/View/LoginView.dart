@@ -18,11 +18,9 @@ class LoginView extends StatelessWidget {
         body: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.all(40),
-          // height: MediaQuery.of(context).size.height * 0.5,
           child: Card(
             elevation: 12,
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
@@ -49,7 +47,6 @@ class LoginView extends StatelessWidget {
                   children: [
                     OutlinedButton(
                         onPressed: (){
-                          // Navigator.popAndPushNamed(context, '/agency_listveiw');
                           Navigator.push(context, MaterialPageRoute<void>(
                                      builder: (BuildContext context) => const MainView(),
                                    ),);

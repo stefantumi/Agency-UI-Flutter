@@ -1,5 +1,7 @@
 import 'package:agencyui/Actions/AgencyAction.dart';
+import 'package:agencyui/Actions/PropertyActions.dart';
 import 'package:agencyui/Models/Agency.dart';
+import 'package:agencyui/Models/Property.dart';
 import 'package:agencyui/Widget/Forms/AgentForm.dart';
 import 'package:agencyui/Widget/Forms/Property/PropertyForm.dart';
 import 'package:agencyui/Widget/Forms/Property/PropertyFormCreate.dart';
@@ -18,6 +20,7 @@ class AgencyDetails extends StatefulWidget {
 class _AgencyDetailsState extends State<AgencyDetails> {
   late Future<Agency> futureAgency;
 
+
   @override
   initState(){
     super.initState();
@@ -30,7 +33,10 @@ class _AgencyDetailsState extends State<AgencyDetails> {
         appBar: AppBar(
           title: const Text('name'),
           actions: [
-            IconButton(onPressed: (){}, icon: const Icon(Icons.settings))
+            IconButton(onPressed: (){}, icon: const Icon(Icons.settings)),
+            IconButton(onPressed: (){
+            },
+              icon: const Icon(Icons.refresh),)
           ],
         ),
         body: SingleChildScrollView(
@@ -51,7 +57,7 @@ class _AgencyDetailsState extends State<AgencyDetails> {
                           ),
                         ),
                       ),
-                      Properties(property: snapshot.data!.properties!),
+                      AgencyProperties(property: snapshot.data!.properties!),
                       Agents(agents: snapshot.data!.agents!)
 
                     ],
@@ -68,8 +74,8 @@ class _AgencyDetailsState extends State<AgencyDetails> {
   }
 }
 
-class Properties extends StatelessWidget {
-  const Properties({Key? key, required this.property}) : super(key: key);
+class AgencyProperties extends StatelessWidget {
+  const AgencyProperties({Key? key, required this.property}) : super(key: key);
 
   final List<dynamic> property;
 
@@ -102,15 +108,59 @@ class Properties extends StatelessWidget {
                   itemBuilder: (BuildContext context, index){
                     return ListTile(
                         title: Text(property[index]['address']['street'].toString()),
+                        contentPadding: const EdgeInsets.all(8),
                         leading: CircleAvatar(
                           child: Text(property[index]['id'].toString()),
                         ),
-                        trailing: IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () {
-                              propertyDialog(context, property[index]);
-                            }
-                            ),
+                        // TODO: change to a split button with delete or edit choice
+                        trailing: TextButton(
+                          child: const Icon(Icons.edit),
+                          onPressed: (){
+                            propertyDialog(context, property[index]);
+                          },
+                          onLongPress: (){
+                            TextStyle buttonTextStyle = const TextStyle(
+                              fontSize: 24
+                            );
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context){
+                                  return Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("Are you sure you want to delete this property?" , style: buttonTextStyle),
+                                        const Text("You will not be notified of success or failure, You will need to reload the for updated content"),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              TextButton(
+                                                  onPressed: (){
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text("Cancel" , style: buttonTextStyle)),
+                                              TextButton(
+                                                  onPressed: (){
+                                                    // TODO: inform user of success or failure
+                                                    // TODO: implement action to refresh acestor widget
+                                                    deletePropertyById(int.parse(property[index]['id'].toString()));
+                                                    Navigator.of(context).pop();
+                                              },
+                                                  child: Text("Confirm", style: buttonTextStyle,))
+
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                                );
+                          }
+                        )
                     );
                   }
                   ),
@@ -144,19 +194,26 @@ class Agents extends StatelessWidget {
               child: ListView.builder(
                   itemCount: agents.length,
                   itemBuilder: (BuildContext context, index){
-                    return ListTile(
-                      leading: CircleAvatar(
-                        child:  Text(agents[index]['id'].toString()),
-                      ),
-                      title: Column(
-                        children: [
-                          Text(agents[index]['firstName'].toString()),
-                          Text(agents[index]['lastName'].toString())
-                        ],
-                      ),
-                      trailing: IconButton(icon: const Icon(Icons.edit), onPressed: () {
-                        agentDialog(context, agents[index]);
-                      },
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: ListTile(
+                          visualDensity: VisualDensity.adaptivePlatformDensity,
+                          leading: CircleAvatar(
+                            child:  Text(agents[index]['id'].toString()),
+                          ),
+                          title: Column(
+                            children: [
+                              Text(agents[index]['firstName'].toString()),
+                              Text(agents[index]['lastName'].toString())
+                            ],
+                          ),
+                          trailing: IconButton(icon: const Icon(Icons.edit), onPressed: () {
+                            agentDialog(context, agents[index]);
+                          },
+                          ),
+                        ),
                       ),
                     );
                   }

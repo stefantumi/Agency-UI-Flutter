@@ -31,15 +31,13 @@ class Property {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() => {
-/*
-    "id" : id,
-*/
-    "address": address.toMap() ,
-    "size" : size ,
-    "price" : price ,
+    "address": address.toMap(),
+    "size" : size,
+    "price" : price,
     "Owner" : owner,
-    "Buyer": buyer,
+    "Buyer": buyer
   };
 
 }

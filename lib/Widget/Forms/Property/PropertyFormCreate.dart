@@ -1,10 +1,8 @@
 import 'package:agencyui/Actions/PropertyActions.dart';
 import 'package:agencyui/Models/Address.dart';
-import 'package:agencyui/Models/Owner.dart';
 import 'package:agencyui/Models/Property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
 
 void propertyDialogCreate(context){
@@ -18,8 +16,6 @@ void propertyDialogCreate(context){
   TextEditingController priceController = TextEditingController(text: 'Property Price');
   TextEditingController a = TextEditingController(text: '');
 
-  Address formAddress = Address(street: "hudlu", houseNo: 2, zip: 30);
-  Property formProperty = Property(address: formAddress, size: 1212, price: 1212);
 
   showDialog(
       context: context,
@@ -31,13 +27,13 @@ void propertyDialogCreate(context){
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children:  [
-                        TextField(
+                        /*TextField(
                           enabled: false,
                           decoration: InputDecoration(
                               filled: true,
                               labelText: formProperty.id.toString()
                           ),
-                        ),
+                        ),*/
                         TextField(
                           controller: sizeController,
                           inputFormatters: <TextInputFormatter>[
@@ -107,13 +103,13 @@ void propertyDialogCreate(context){
                                 ),
                                 child: const Text("apply"),
                                 onPressed: (){
-                                  createProperty(Property(address: Address(
-                                      street: streetController.text,
-                                      houseNo: int.parse(houseNoController.text.toString()),
-                                      zip: int.parse(zipController.text.toString())),
+                                  createProperty(Property(
+                                      address: Address(
+                                          street: streetController.text,
+                                          houseNo: int.parse(houseNoController.text.toString()),
+                                          zip: int.parse(zipController.text.toString())),
                                       size: double.parse(sizeController.text.toString()),
                                       price: double.parse(priceController.text.toString())));
-
                                   Navigator.of(context).pop();
                                 },
                               ),

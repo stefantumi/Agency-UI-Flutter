@@ -1,5 +1,4 @@
 
-
 class Agency {
   final int id;
   final String name;
@@ -14,12 +13,12 @@ class Agency {
   });
 
 
-  factory Agency.fromJson(Map<dynamic, dynamic> json) {
+  factory Agency.fromJson(Map<String, dynamic> jsonData) {
     return Agency(
-      id: json["id"],
-      name: json["name"],
-      properties: json['properties'],
-      agents: json['agents']
+      id: jsonData["id"],
+      name: jsonData["name"],
+      properties: jsonData['properties'],
+      agents: jsonData['agents']
     );
   }
 

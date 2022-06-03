@@ -1,12 +1,11 @@
+
 import 'package:agencyui/Actions/PropertyActions.dart';
 import 'package:agencyui/Models/Address.dart';
 import 'package:agencyui/Models/Property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
-
-void propertyDialogCreate(context, id){
+/*void propertyDialogCreate(context, id){
 
 
   TextEditingController streetController = TextEditingController(text: 'Street Name');
@@ -105,13 +104,15 @@ void propertyDialogCreate(context, id){
                                 ),
                                 child: const Text("apply"),
                                 onPressed: (){
-                               /*createProperty(Property(address: Address(
+                               */
+/*createProperty(Property(address: Address(
                                       street: streetController.text,
                                       houseNo: int.parse(houseNoController.text.toString()),
                                       zip: int.parse(zipController.text.toString())),
                                       size: double.parse(sizeController.text.toString()),
-                                      price: double.parse(priceController.text.toString())));*/
-                                  updatePropertyById(id);
+                                      price: double.parse(priceController.text.toString())));*//*
+
+                                  updatePropertyById(formProperty).then((value) => value.statusCode == 201? Navigator.of(context).pop(): null);
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -126,4 +127,4 @@ void propertyDialogCreate(context, id){
           )
       )
   );
-}
+}*/

@@ -1,12 +1,15 @@
+import 'package:agencyui/Actions/PropertyActions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 
 void propertyDialog(context, dynamic property){
-  TextEditingController addressTextCtrl = TextEditingController(text: property['address']['street']);
+  TextEditingController streetTextCtrl = TextEditingController(text: property['address']['street']);
+  TextEditingController houseNoTextCtrl = TextEditingController(text: property['address']['houseNo']);
+  TextEditingController zipTextCtrl = TextEditingController(text: property['address']['zip']);
+
   TextEditingController sizeTextCtrl = TextEditingController(text: property['size'].toString());
   TextEditingController priceTextCtrl = TextEditingController(text: property['price'].toString());
-  TextEditingController a = TextEditingController(text: property['']);
 
   showDialog(
       context: context,
@@ -25,10 +28,24 @@ void propertyDialog(context, dynamic property){
                         ),
                       ),
                       TextField(
-                        controller: addressTextCtrl,
+                        controller: streetTextCtrl,
                         decoration: InputDecoration(
                             filled: true,
-                            labelText: "${property['address']['street'].toString()} ${property['address']['houseNo'].toString()} ${property['address']['zip'].toString()}"
+                            labelText: "${property['address']['street'].toString()}"
+                        ),
+                      ),
+                      TextField(
+                        controller: houseNoTextCtrl,
+                        decoration: InputDecoration(
+                            filled: true,
+                            labelText: "${property['address']['houseNo'].toString()}"
+                        ),
+                      ),
+                      TextField(
+                        controller: zipTextCtrl,
+                        decoration: InputDecoration(
+                            filled: true,
+                            labelText: "${property['address']['zip'].toString()}"
                         ),
                       ),
                       TextField(
@@ -44,6 +61,9 @@ void propertyDialog(context, dynamic property){
                       ),
                       TextField(
                         controller: priceTextCtrl,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                             filled: true,
                             labelText: property['price'].toString()
@@ -69,7 +89,23 @@ void propertyDialog(context, dynamic property){
                             child: TextButton(
                               style: const ButtonStyle(
                               ),
-                              onPressed: (){},
+                              onPressed: (){
+                                print("$property");
+                                updatePropertyById(
+                                  <String,dynamic> {
+                                    "id":"${property['id']}",
+                                    "address":<String,dynamic>{
+                                      "id":"${property['address']['id']}",
+                                      "street":streetTextCtrl.value.text,
+                                      "houseNo": houseNoTextCtrl.text.toString(),
+                                      "zip": zipTextCtrl.text.toString()
+                                    },
+                                    "size":"${property['size']}",
+                                    "price":"${property['price']}"
+                                }
+                                );
+                                Navigator.of(context).pop();
+                              },
                               child: const Text("apply"),
                             ),
                           ),

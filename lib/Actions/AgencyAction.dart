@@ -47,9 +47,7 @@ Future<List<Agency>> getAgencyList() async {
 Future<Agency> getAgencyById(int id) async {
 
   var response = await http.get(Uri.parse("https://$serverHost:7210/api/agency/$id"));
-
   var decodedResponse = json.decode(response.body);
-
   return Agency.fromJson(decodedResponse);
 
   /*  var response = await http.get(Uri.parse("https://$serverHost:7210/api/agency/$id"));
